@@ -333,50 +333,49 @@
    * ~tame()~, ~securelevel~
    * ...
 
-** Oh my, there are so many
+*** Oh my, there are so many
 
-   * That should probably tell you something
-   * Mostly opt-in or de-facto opt-in
+    * That should probably tell you something
+    * Mostly opt-in or de-facto opt-in
 
-** We sort-of are
+** We sort-of are doing this already
 
    * ~capsicum~
-   * Webhooks
+   * Webhooks (no confinement)
 
-** Except of course, we aren't
+*** Except of course, we aren't
 
-   How many of you have Python software that can only open exactly the
-   sockets and files it needs to be able to open?
+    How many of you:
 
-** We've tried this
+    #+ATTR_REVEAL: :frag (roll-in)
+    * ... have Python software running in production?
+    * ... that can only access exactly the resources it needs?
 
-   * Programming languages: E, Caja, ...
-   * Operating systems: EROS, Coyotos, (s)eL4, ...
-   * Other systems: Tahoe-LAFS
+*** We've tried this
 
-** Really great features, e.g. in E
+    * Programming languages: E, Caja, ...
+    * Operating systems: EROS, Coyotos, (s)eL4, ...
+    * Other systems: Tahoe-LAFS
 
-   * Secure (crypto, not pinky swears)
-   * Persistent
-   * Distributed (a la Erlang)
-   * Deadlock free
+*** Really great features, e.g. in E
 
-** Personal hypothesis
+    * Secure (crypto, not pinky swears)
+    * Persistent
+    * Distributed (a la Erlang)
+    * Deadlock free
 
+*** It didn't pan out
 
+    Has /anyone/ heard of any of these systems?
 
-** It didn't pan out
+*** Why didn't it pan out?
 
-   Has /anyone/ heard of any of these systems?
+    (Reality is complex, I'm simplifying, theorizing)
 
-** Why didn't it pan out?
-
-   (Reality is complex, I'm simplifying, theorizing)
-
-   * Backwards compatibility is pretty great
-     * Nobody wants to re-write their project
-   * Security often not the priority
-     * (see Building Secure Systems, PyCon 2015)
+    * Backwards compatibility is pretty great
+      * Nobody wants to re-write their project
+    * Security often not the priority
+      * (see Building Secure Systems, PyCon 2015)
 
 ** How can we do better?
 
