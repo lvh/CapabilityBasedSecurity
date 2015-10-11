@@ -1,0 +1,416 @@
+#+Title: Capability-based Security
+#+Author: @lvh
+#+Email: _@lvh.io
+
+#+OPTIONS: toc:nil reveal_rolling_links:nil num:nil reveal_history:true
+#+REVEAL_TRANS: linear
+#+REVEAL_THEME: lvh
+
+* Slides
+
+  ~https://www.lvh.io/CapabilityBasedSecurity~
+
+* Introduction
+
+** Who am I?
+
+   #+BEGIN_HTML
+   <img style="width:70%" src="./media/lvh.svg">
+   #+END_HTML
+
+** 　
+
+   #+ATTR_HTML: :style width:80%
+   [[./media/RMSLogoWithTextmarkLight.png]]
+
+** Stuff I care about
+
+   * Cryptography & infosec
+   * Distributed systems
+
+** Talks in most of the world
+
+   #+BEGIN_HTML
+   <img style="width:40%" src="./media/Serious.svg">
+   #+END_HTML
+
+** Talks in Poland
+
+   #+BEGIN_HTML
+   <img style="width:70%" src="./media/MadScientist.svg">
+   #+END_HTML
+
+** This talk
+
+   #+BEGIN_HTML
+   <img style="width:70%" src="./media/MadScientist.svg">
+   #+END_HTML
+
+** This talk
+
+   * Information security!
+   * Cryptography!
+   * Distributed systems!
+
+* Auth________‌n
+
+** 　
+
+   #+BEGIN_HTML
+   <img style="width:60%" src="./media/Octocat.svg">
+   #+END_HTML
+
+** Try to access a repo
+
+   ~https://github.com/RackSec/secret~
+
+   1. GitHub figures out who you are
+   2. GitHub checks if you should have access
+
+** Pattern
+
+   1. Authentication /f: creds ↦ ident/
+   2. Authorization /f: ident ↦ access/
+
+   #+BEGIN_NOTES
+   Unfortunately authentication is overloaded
+   Here I just mean establishing identity, not cryptographic sense which often includes integrity
+   #+END_NOTES
+
+** What's wrong with that?
+
+   Two issues we'll discuss:
+
+   * Fails open
+   * Imprecise
+
+** Fails open
+
+   What happens when /authorization/ breaks?
+
+   * Legitimate user can't access
+   * /Illegitimate user can access/
+
+*** Authentication is tricky, too
+
+    E.g. ambient authority issues like CSRF
+
+*** Failing open ⇒ other failures worse
+
+    #+ATTR_REVEAL: :frag (roll-in)
+    * In most PLs, code can do anything
+      * ⇒ code execution ≡ game over
+    * Lots of ways to get code execution
+      * ~pickle~ (seriously, don't use pickles)
+      * Weird machines (seriously, write grammars)
+      * ...
+
+*** Python code can do anything
+
+   If I can run code, I can:
+
+   * crash your interpreter
+   * read your objects
+   * read files and env vars
+   * (anything your code can do)
+
+*** Fun snippets
+
+    #+BEGIN_SRC python
+      ().__class__.__bases__[0].__subclasses__()
+    #+END_SRC
+
+    #+BEGIN_SRC python
+      (lambda: None).func_globals # py2
+      (lambda: None).__globals__ # py3
+
+    #+END_SRC
+
+** Imprecise
+
+*** Waffle.io
+
+    Kanban-board style issue tracker for Github
+
+   #+BEGIN_HTML
+   <img style="width:100%" src="./media/WaffleIo.png">
+   #+END_HTML
+
+*** OAuth authorization flow
+
+   #+BEGIN_HTML
+   <img style="width:90%" src="./media/WaffleIoAuthorization.png">
+   #+END_HTML
+
+*** What does "repositories" mean?
+
+   #+BEGIN_HTML
+   <img style="width:80%" src="./media/WaffleIoAuthorizatonDetails.png">
+   #+END_HTML
+
+*** Not a GitHub issue
+
+    OAuth's "scope" parameter encourages this
+
+*** AutoScale
+
+   * Manages groups of servers
+   * Scale up and down easily
+
+*** /On behalf of/ customers; just a tool
+
+   * Just a tool
+   * Should work as if user did it directly:
+     * Billing
+     * Audit logs
+     * Limits
+     * ...
+
+*** Make it work as if the user did it
+
+    #+ATTR_REVEAL: :frag (roll-in)
+    * Easiest solution: impersonate them
+    * How do I impersonate a user?
+    * Admin credentials (of course!)
+
+*** ☣ ☠ ☢
+
+    * Accidentally commit to (public!) repo?
+    * On development machine for staging runs?
+
+    A lot of people want those magic keys...
+
+*** ☠ THREAT MODEL: MOSSAD ☠
+
+    That's it, we're screwed
+
+    We are going to be Mossad'ed upon
+
+    #+BEGIN_HTML
+    <img style="width:80%" src="./media/MossadedUpon.png">
+    #+END_HTML
+
+*** ☠ THREAT LEVEL: MOSSAD ☠
+
+    #+BEGIN_HTML
+    <img style="width:13%" src="./media/FBI.svg">
+    <img style="width:13%" src="./media/PLA.svg">
+
+    <br>
+
+    <img style="width:13%" src="./media/Mossad.svg">
+    <img style="width:18%" src="./media/lvh.svg">
+    <img style="width:13%" src="./media/CIA.svg">
+
+    <br>
+
+    <img style="width:13%" src="./media/NSA.svg">
+    <img style="width:13%" src="./media/Putin.jpg">
+    #+END_HTML
+
+    #+BEGIN_NOTES
+    Literally my only hope is that the FBI, CIA, PLA, Mossad, ISIS,
+    Mafia, Russian mob, Illuminati, lizard people, accidentally kill
+    each other before they get to me!
+    #+END_NOTES
+
+* Pies in the sky
+
+    #+BEGIN_HTML
+    <img style="width:30%" src="./media/Pies.svg">
+    #+END_HTML
+
+** I'm too young to die
+
+   What can we do to fix this?
+
+** Principle of Least Privilege
+
+   "Don't give X more access than X needs"
+
+** But our current tools are imprecise!
+
+** Approach the problem from the other end
+
+   Before:
+
+   1. Authentication first class object
+   2. Authorization flows from it
+
+   Now
+
+   1. Authorization first class object
+   2. (Authentication may flow from it)
+
+** Capabilities
+
+   * First-class object
+   * Can be communicated
+     * Contained?
+   * Can not be forged
+
+** Object capabilities
+
+   To use e.g. sockets, you need:
+
+   * The ~socket~ module
+   * A reference to a socket
+
+*** OOP: getting objects to do things
+
+    Control references to objects
+
+    ⇒
+
+    Control what code can do
+
+** What granularity do we want?
+
+*** I don't want:
+
+   * golden key to the cloud
+   * API key per customer
+
+*** What granularity do we want?
+
+    #+ATTR_REVEAL: :frag (roll-in)
+    * API key per customer
+    * Limited use (time, # of uses)
+    * Trivial to rotate, revoke
+    * For exactly these flavors: /{1, 2, 3}/
+    * For exactly these images: /{A, B}/
+    * /Only/ in data center α
+    * /Only/ delete servers made this way
+
+*** Dependent types-style problem
+
+    Most AC systems can express e.g.:
+
+    * Can create server
+    * Can delete server
+
+    That's too broad, I want:
+
+    * Can create server with image /A/, &c
+    * Can delete server made this way
+
+*** Even if we settle for imprecise & ugly
+
+    * Roles are the path to the dark side
+    * Roles lead to Active Directory
+    * Active Directory leads to anger
+    * Anger leads to hate
+    * Hate leads to suffering
+
+*** Finally, why would you /want/ that?
+
+    Cryptography, not pinky swears
+
+** Attenuation (a.k.a diminishing)
+
+   * In: cap that can do {X, Y, Z}
+   * Out: cap that can only do {X, Y}
+
+* Okay, great, but how do I actually do that?
+
+** Easy mode: local
+
+** Crypto, not pinky swears
+
+*** Tahoe-LAFS
+
+   #+BEGIN_HTML
+   <img style="width:100%" src="./media/TahoeLAFSCaps.svg">
+   #+END_HTML
+
+* Why aren't we all doing this already?
+
+** Lots of alternatives
+
+   * Classic privilege dropping
+   * POSIX capabilities (~CAP_NET_BIND_SERVICE~ &c)
+   * ~seccomp~, ~AppArmor~, ~SELinux~, ...
+   * ~tame()~, ~securelevel~
+   * ...
+
+** Oh my, there are so many
+
+   * That should probably tell you something
+   * Mostly opt-in or de-facto opt-in
+
+** We sort-of are
+
+   * ~capsicum~
+   * Webhooks
+
+** Except of course, we aren't
+
+   How many of you have Python software that can only open exactly the
+   sockets and files it needs to be able to open?
+
+** We've tried this
+
+   * Programming languages: E, Caja, ...
+   * Operating systems: EROS, Coyotos, (s)eL4, ...
+   * Other systems: Tahoe-LAFS
+
+** Really great features, e.g. in E
+
+   * Secure (crypto, not pinky swears)
+   * Persistent
+   * Distributed (a la Erlang)
+   * Deadlock free
+
+** Personal hypothesis
+
+
+
+** It didn't pan out
+
+   Has /anyone/ heard of any of these systems?
+
+** Why didn't it pan out?
+
+   (Reality is complex, I'm simplifying, theorizing)
+
+   * Backwards compatibility is pretty great
+     * Nobody wants to re-write their project
+   * Security often not the priority
+     * (see Building Secure Systems, PyCon 2015)
+
+** How can we do better?
+
+   UX UX UX UX UX UX UX UX
+   UX UX UX UX UX UX UX UX
+   UX UX UX UX UX UX UX UX
+   UX UX UX UX UX UX UX UX
+   UX UX UX UX UX UX UX UX
+   UX UX UX UX UX UX UX UX
+   UX UX UX UX UX UX UX UX
+   UX UX UX UX UX UX UX UX
+   UX UX UX UX UX UX UX UX
+   UX UX UX UX UX UX UX UX
+   UX UX UX UX UX UX UX UX
+   UX UX UX UX UX UX UX UX
+   UX UX UX UX UX UX UX UX
+   UX UX UX UX UX UX UX UX
+
+** Seriously crypto people
+
+   (Yes, this includes me)
+
+   * Most programmers no longer do crypto
+   * But cryptographers still do UX... poorly
+
+* Wrap-up
+
+** Thanks, everyone!
+
+   * Everyone for putting up with my rant
+   * PyCon PL organizers for inviting me 💖
+
+** Questions?
+
+* Slides
+
+  ~https://www.lvh.io/CapabilityBasedSecurity~

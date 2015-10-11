@@ -1,0 +1,713 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Capability-based Security</title>
+<meta name="author" content="(@lvh)"/>
+<link rel="stylesheet" href="./reveal.js/css/reveal.css"/>
+<link rel="stylesheet" href="./reveal.js/css/theme/lvh.css" id="theme"/>
+<link rel="stylesheet" href=""/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1>Capability-based Security</h1>
+<h2>@lvh</h2>
+<h2><a href="mailto:_@lvh.io">_@lvh.io</a></h2>
+<h2></h2>
+</section>
+
+<section>
+<section id="slide-orgheadline1">
+<h2 id="orgheadline1">Slides</h2>
+<p>
+<code>https://www.lvh.io/CapabilityBasedSecurity</code>
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline9">
+<h2 id="orgheadline9">Introduction</h2>
+<div class="outline-text-2" id="text-orgheadline9">
+</div></section>
+<section id="slide-orgheadline2">
+<h3 id="orgheadline2">Who am I?</h3>
+<img style="width:70%" src="./media/lvh.svg">
+
+</section>
+<section id="slide-orgheadline3">
+<h3 id="orgheadline3">　</h3>
+
+<div class="figure">
+<p><img src="./media/RMSLogoWithTextmarkLight.png" alt="RMSLogoWithTextmarkLight.png" style="width:80%" />
+</p>
+</div>
+
+</section>
+<section id="slide-orgheadline4">
+<h3 id="orgheadline4">Stuff I care about</h3>
+<ul>
+<li>Cryptography &amp; infosec</li>
+<li>Distributed systems</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline5">
+<h3 id="orgheadline5">Talks in most of the world</h3>
+<img style="width:40%" src="./media/Serious.svg">
+
+</section>
+<section id="slide-orgheadline6">
+<h3 id="orgheadline6">Talks in Poland</h3>
+<img style="width:70%" src="./media/MadScientist.svg">
+
+</section>
+<section id="slide-orgheadline7">
+<h3 id="orgheadline7">This talk</h3>
+<img style="width:70%" src="./media/MadScientist.svg">
+
+</section>
+<section id="slide-orgheadline8">
+<h3 id="orgheadline8">This talk</h3>
+<ul>
+<li>Information security!</li>
+<li>Cryptography!</li>
+<li>Distributed systems!</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline30">
+<h2 id="orgheadline30">Auth________‌n</h2>
+<div class="outline-text-2" id="text-orgheadline30">
+</div></section>
+<section id="slide-orgheadline10">
+<h3 id="orgheadline10">　</h3>
+<img style="width:60%" src="./media/Octocat.svg">
+
+</section>
+<section id="slide-orgheadline11">
+<h3 id="orgheadline11">Try to access a repo</h3>
+<p>
+<code>https://github.com/RackSec/secret</code>
+</p>
+
+<ol>
+<li>GitHub figures out who you are</li>
+<li>GitHub checks if you should have access</li>
+
+</ol>
+
+</section>
+<section id="slide-orgheadline12">
+<h3 id="orgheadline12">Pattern</h3>
+<ol>
+<li>Authentication <i>f: creds ↦ ident</i></li>
+<li>Authorization <i>f: ident ↦ access</i></li>
+
+</ol>
+
+<aside class="notes">
+<p>
+Unfortunately authentication is overloaded
+Here I just mean establishing identity, not cryptographic sense which often includes integrity
+</p>
+
+</aside>
+
+</section>
+<section id="slide-orgheadline13">
+<h3 id="orgheadline13">What's wrong with that?</h3>
+<p>
+Two issues we'll discuss:
+</p>
+
+<ul>
+<li>Fails open</li>
+<li>Imprecise</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline18">
+<h3 id="orgheadline18">Fails open</h3>
+<p>
+What happens when <i>authorization</i> breaks?
+</p>
+
+<ul>
+<li>Legitimate user can't access</li>
+<li><i>Illegitimate user can access</i></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline14">
+<h4 id="orgheadline14">Authentication is tricky, too</h4>
+<p>
+E.g. ambient authority issues like CSRF
+</p>
+
+</section>
+<section id="slide-orgheadline15">
+<h4 id="orgheadline15">Failing open ⇒ other failures worse</h4>
+<ul>
+<li class="fragment roll-in">In most PLs, code can do anything
+<ul>
+<li>⇒ code execution ≡ game over</li>
+
+</ul></li>
+<li class="fragment roll-in">Lots of ways to get code execution
+<ul>
+<li><code>pickle</code> (seriously, don't use pickles)</li>
+<li>Weird machines (seriously, write grammars)</li>
+<li>&#x2026;</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline16">
+<h4 id="orgheadline16">Python code can do anything</h4>
+<p>
+If I can run code, I can:
+</p>
+
+<ul>
+<li>crash your interpreter</li>
+<li>read your objects</li>
+<li>read files and env vars</li>
+<li>(anything your code can do)</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline17">
+<h4 id="orgheadline17">Fun snippets</h4>
+<div class="org-src-container">
+
+<pre  class="src src-python">().__class__.__bases__[0].__subclasses__()
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre  class="src src-python">(lambda: None).func_globals # py2
+(lambda: None).__globals__ # py3
+</pre>
+</div>
+
+</section>
+<section id="slide-orgheadline29">
+<h3 id="orgheadline29">Imprecise</h3>
+<div class="outline-text-3" id="text-orgheadline29">
+</div></section>
+<section id="slide-orgheadline19">
+<h4 id="orgheadline19">Waffle.io</h4>
+<p>
+Kanban-board style issue tracker for Github
+</p>
+
+<img style="width:100%" src="./media/WaffleIo.png">
+
+</section>
+<section id="slide-orgheadline20">
+<h4 id="orgheadline20">OAuth authorization flow</h4>
+<img style="width:90%" src="./media/WaffleIoAuthorization.png">
+
+</section>
+<section id="slide-orgheadline21">
+<h4 id="orgheadline21">What does "repositories" mean?</h4>
+<img style="width:80%" src="./media/WaffleIoAuthorizatonDetails.png">
+
+</section>
+<section id="slide-orgheadline22">
+<h4 id="orgheadline22">Not a GitHub issue</h4>
+<p>
+OAuth's "scope" parameter encourages this
+</p>
+
+</section>
+<section id="slide-orgheadline23">
+<h4 id="orgheadline23">AutoScale</h4>
+<ul>
+<li>Manages groups of servers</li>
+<li>Scale up and down easily</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline24">
+<h4 id="orgheadline24"><i>On behalf of</i> customers; just a tool</h4>
+<ul>
+<li>Just a tool</li>
+<li>Should work as if user did it directly:
+<ul>
+<li>Billing</li>
+<li>Audit logs</li>
+<li>Limits</li>
+<li>&#x2026;</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline25">
+<h4 id="orgheadline25">Make it work as if the user did it</h4>
+<ul>
+<li class="fragment roll-in">Easiest solution: impersonate them</li>
+<li class="fragment roll-in">How do I impersonate a user?</li>
+<li class="fragment roll-in">Admin credentials (of course!)</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline26">
+<h4 id="orgheadline26">☣ ☠ ☢</h4>
+<ul>
+<li>Accidentally commit to (public!) repo?</li>
+<li>On development machine for staging runs?</li>
+
+</ul>
+
+<p>
+A lot of people want those magic keys&#x2026;
+</p>
+
+</section>
+<section id="slide-orgheadline27">
+<h4 id="orgheadline27">☠ THREAT MODEL: MOSSAD ☠</h4>
+<p>
+That's it, we're screwed
+</p>
+
+<p>
+We are going to be Mossad'ed upon
+</p>
+
+<img style="width:80%" src="./media/MossadedUpon.png">
+
+</section>
+<section id="slide-orgheadline28">
+<h4 id="orgheadline28">☠ THREAT LEVEL: MOSSAD ☠</h4>
+<img style="width:13%" src="./media/FBI.svg">
+<img style="width:13%" src="./media/PLA.svg">
+
+<br>
+
+<img style="width:13%" src="./media/Mossad.svg">
+<img style="width:18%" src="./media/lvh.svg">
+<img style="width:13%" src="./media/CIA.svg">
+
+<br>
+
+<img style="width:13%" src="./media/NSA.svg">
+<img style="width:13%" src="./media/Putin.jpg">
+
+<aside class="notes">
+<p>
+Literally my only hope is that the FBI, CIA, PLA, Mossad, ISIS,
+Mafia, Russian mob, Illuminati, lizard people, accidentally kill
+each other before they get to me!
+</p>
+
+</aside>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline45">
+<h2 id="orgheadline45">Pies in the sky</h2>
+<img style="width:30%" src="./media/Pies.svg">
+
+</section>
+<section id="slide-orgheadline31">
+<h3 id="orgheadline31">I'm too young to die</h3>
+<p>
+What can we do to fix this?
+</p>
+
+</section>
+<section id="slide-orgheadline32">
+<h3 id="orgheadline32">Principle of Least Privilege</h3>
+<p>
+"Don't give X more access than X needs"
+</p>
+
+</section>
+<section id="slide-orgheadline33">
+<h3 id="orgheadline33">But our current tools are imprecise!</h3>
+
+</section>
+<section id="slide-orgheadline34">
+<h3 id="orgheadline34">Approach the problem from the other end</h3>
+<p>
+Before:
+</p>
+
+<ol>
+<li>Authentication first class object</li>
+<li>Authorization flows from it</li>
+
+</ol>
+
+<p>
+Now
+</p>
+
+<ol>
+<li>Authorization first class object</li>
+<li>(Authentication may flow from it)</li>
+
+</ol>
+
+</section>
+<section id="slide-orgheadline35">
+<h3 id="orgheadline35">Capabilities</h3>
+<ul>
+<li>First-class object</li>
+<li>Can be communicated
+<ul>
+<li>Contained?</li>
+
+</ul></li>
+<li>Can not be forged</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline37">
+<h3 id="orgheadline37">Object capabilities</h3>
+<p>
+To use e.g. sockets, you need:
+</p>
+
+<ul>
+<li>The <code>socket</code> module</li>
+<li>A reference to a socket</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline36">
+<h4 id="orgheadline36">OOP: getting objects to do things</h4>
+<p>
+Control references to objects
+</p>
+
+<p>
+⇒
+</p>
+
+<p>
+Control what code can do
+</p>
+
+</section>
+<section id="slide-orgheadline43">
+<h3 id="orgheadline43">What granularity do we want?</h3>
+<div class="outline-text-3" id="text-orgheadline43">
+</div></section>
+<section id="slide-orgheadline38">
+<h4 id="orgheadline38">I don't want:</h4>
+<ul>
+<li>golden key to the cloud</li>
+<li>API key per customer</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline39">
+<h4 id="orgheadline39">What granularity do we want?</h4>
+<ul>
+<li class="fragment roll-in">API key per customer</li>
+<li class="fragment roll-in">Limited use (time, # of uses)</li>
+<li class="fragment roll-in">Trivial to rotate, revoke</li>
+<li class="fragment roll-in">For exactly these flavors: <i>{1, 2, 3}</i></li>
+<li class="fragment roll-in">For exactly these images: <i>{A, B}</i></li>
+<li class="fragment roll-in"><i>Only</i> in data center α</li>
+<li class="fragment roll-in"><i>Only</i> delete servers made this way</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline40">
+<h4 id="orgheadline40">Dependent types-style problem</h4>
+<p>
+Most AC systems can express e.g.:
+</p>
+
+<ul>
+<li>Can create server</li>
+<li>Can delete server</li>
+
+</ul>
+
+<p>
+That's too broad, I want:
+</p>
+
+<ul>
+<li>Can create server with image <i>A</i>, &amp;c</li>
+<li>Can delete server made this way</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline41">
+<h4 id="orgheadline41">Even if we settle for imprecise &amp; ugly</h4>
+<ul>
+<li>Roles are the path to the dark side</li>
+<li>Roles lead to Active Directory</li>
+<li>Active Directory leads to anger</li>
+<li>Anger leads to hate</li>
+<li>Hate leads to suffering</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline42">
+<h4 id="orgheadline42">Finally, why would you <i>want</i> that?</h4>
+<p>
+Cryptography, not pinky swears
+</p>
+
+</section>
+<section id="slide-orgheadline44">
+<h3 id="orgheadline44">Attenuation (a.k.a diminishing)</h3>
+<ul>
+<li>In: cap that can do {X, Y, Z}</li>
+<li>Out: cap that can only do {X, Y}</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline49">
+<h2 id="orgheadline49">Okay, great, but how do I actually do that?</h2>
+<div class="outline-text-2" id="text-orgheadline49">
+</div></section>
+<section id="slide-orgheadline46">
+<h3 id="orgheadline46">Easy mode: local</h3>
+
+</section>
+<section id="slide-orgheadline48">
+<h3 id="orgheadline48">Crypto, not pinky swears</h3>
+<div class="outline-text-3" id="text-orgheadline48">
+</div></section>
+<section id="slide-orgheadline47">
+<h4 id="orgheadline47">Tahoe-LAFS</h4>
+<img style="width:100%" src="./media/TahoeLAFSCaps.svg">
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline61">
+<h2 id="orgheadline61">Why aren't we all doing this already?</h2>
+<div class="outline-text-2" id="text-orgheadline61">
+</div></section>
+<section id="slide-orgheadline50">
+<h3 id="orgheadline50">Lots of alternatives</h3>
+<ul>
+<li>Classic privilege dropping</li>
+<li>POSIX capabilities (<code>CAP_NET_BIND_SERVICE</code> &amp;c)</li>
+<li><code>seccomp</code>, <code>AppArmor</code>, <code>SELinux</code>, &#x2026;</li>
+<li><code>tame()</code>, <code>securelevel</code></li>
+<li>&#x2026;</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline51">
+<h3 id="orgheadline51">Oh my, there are so many</h3>
+<ul>
+<li>That should probably tell you something</li>
+<li>Mostly opt-in or de-facto opt-in</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline52">
+<h3 id="orgheadline52">We sort-of are</h3>
+<ul>
+<li><code>capsicum</code></li>
+<li>Webhooks</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline53">
+<h3 id="orgheadline53">Except of course, we aren't</h3>
+<p>
+How many of you have Python software that can only open exactly the
+sockets and files it needs to be able to open?
+</p>
+
+</section>
+<section id="slide-orgheadline54">
+<h3 id="orgheadline54">We've tried this</h3>
+<ul>
+<li>Programming languages: E, Caja, &#x2026;</li>
+<li>Operating systems: EROS, Coyotos, (s)eL4, &#x2026;</li>
+<li>Other systems: Tahoe-LAFS</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline55">
+<h3 id="orgheadline55">Really great features, e.g. in E</h3>
+<ul>
+<li>Secure (crypto, not pinky swears)</li>
+<li>Persistent</li>
+<li>Distributed (a la Erlang)</li>
+<li>Deadlock free</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline56">
+<h3 id="orgheadline56">Personal hypothesis</h3>
+
+
+
+</section>
+<section id="slide-orgheadline57">
+<h3 id="orgheadline57">It didn't pan out</h3>
+<p>
+Has <i>anyone</i> heard of any of these systems?
+</p>
+
+</section>
+<section id="slide-orgheadline58">
+<h3 id="orgheadline58">Why didn't it pan out?</h3>
+<p>
+(Reality is complex, I'm simplifying, theorizing)
+</p>
+
+<ul>
+<li>Backwards compatibility is pretty great
+<ul>
+<li>Nobody wants to re-write their project</li>
+
+</ul></li>
+<li>Security often not the priority
+<ul>
+<li>(see Building Secure Systems, PyCon 2015)</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline59">
+<h3 id="orgheadline59">How can we do better?</h3>
+<p>
+UX UX UX UX UX UX UX UX
+UX UX UX UX UX UX UX UX
+UX UX UX UX UX UX UX UX
+UX UX UX UX UX UX UX UX
+UX UX UX UX UX UX UX UX
+UX UX UX UX UX UX UX UX
+UX UX UX UX UX UX UX UX
+UX UX UX UX UX UX UX UX
+UX UX UX UX UX UX UX UX
+UX UX UX UX UX UX UX UX
+UX UX UX UX UX UX UX UX
+UX UX UX UX UX UX UX UX
+UX UX UX UX UX UX UX UX
+UX UX UX UX UX UX UX UX
+</p>
+
+</section>
+<section id="slide-orgheadline60">
+<h3 id="orgheadline60">Seriously crypto people</h3>
+<p>
+(Yes, this includes me)
+</p>
+
+<ul>
+<li>Most programmers no longer do crypto</li>
+<li>But cryptographers still do UX&#x2026; poorly</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline64">
+<h2 id="orgheadline64">Wrap-up</h2>
+<div class="outline-text-2" id="text-orgheadline64">
+</div></section>
+<section id="slide-orgheadline62">
+<h3 id="orgheadline62">Thanks, everyone!</h3>
+<ul>
+<li>Everyone for putting up with my rant</li>
+<li>PyCon PL organizers for inviting me 💖</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline63">
+<h3 id="orgheadline63">Questions?</h3>
+
+</section>
+</section>
+<section>
+<section id="slide-orgheadline65">
+<h2 id="orgheadline65">Slides</h2>
+<p>
+<code>https://www.lvh.io/CapabilityBasedSecurity</code>
+</p>
+</section>
+</section>
+</div>
+</div>
+<script src="./reveal.js/lib/js/head.min.js"></script>
+<script src="./reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: true,
+center: true,
+slideNumber: true,
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'linear', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+});
+</script>
+</body>
+</html>
