@@ -88,12 +88,13 @@
 
    What happens when /authorization/ breaks?
 
+   #+ATTR_REVEAL: :frag (roll-in)
    * Legitimate user can't access
    * /Illegitimate user can access/
 
 *** Authentication is tricky, too
 
-    E.g. ambient authority issues like CSRF
+    (but let's focus on authorization failing)
 
 *** Failing open ⇒ other failures worse
 
@@ -126,11 +127,15 @@
 
     #+END_SRC
 
+*** (This is hopefully obvious)
+
+    * Running Python ≡ running Python?!
+    * Boring statement is boring
+    * /Why/? Could it work differently?
+
 ** Imprecise
 
 *** Waffle.io
-
-    Kanban-board style issue tracker for Github
 
    #+BEGIN_HTML
    <img style="width:100%" src="./media/WaffleIo.png">
@@ -148,7 +153,7 @@
    <img style="width:80%" src="./media/WaffleIoAuthorizatonDetails.png">
    #+END_HTML
 
-*** Not a GitHub issue
+*** Not GitHub's fault
 
     OAuth's ~scope~ parameter encourages this
 
@@ -159,12 +164,8 @@
 
 *** /On behalf of/ customers; just a tool
 
-   * Just a tool
-   * Should work as if user did it directly:
-     * Billing
-     * Audit logs
-     * Limits
-     * ...
+    * Should work as if user did it directly
+    * Billing, audit logs, limits...
 
 *** Make it work as if the user did it
 
@@ -172,6 +173,12 @@
     * Easiest solution: impersonate them
     * How do I impersonate a user?
     * Admin credentials (of course!)
+
+*** Yay admin credentials
+
+   #+BEGIN_HTML
+   <img style="width:60%" src="./media/Explosive.svg">
+   #+END_HTML
 
 *** ☣ ☠ ☢
 
@@ -228,16 +235,16 @@
 
    "Don't give X more access than X needs"
 
-** But our current tools are imprecise!
+** But our tools are imprecise!
 
-** Approach the problem from the other end
+** Copernican revolution
 
-   Before:
+   So far:
 
    1. Authentication first class object
    2. Authorization flows from it
 
-   Now
+   Consider:
 
    1. Authorization first class object
    2. (Authentication may flow from it)
@@ -245,8 +252,9 @@
 ** Capabilities
 
    * First-class object
+   * Precise embodiment of authorization
    * Can be communicated
-     * Contained?
+     * Possibly contained
    * Can not be forged
 
 ** Object capabilities
@@ -256,11 +264,11 @@
    * The ~socket~ module
    * A reference to a socket
 
-*** OOP: getting objects to do things
+*** OOP: making objects do stuff
 
     Control references to objects
 
-    ⇒
+    ⇓
 
     Control what code can do
 
