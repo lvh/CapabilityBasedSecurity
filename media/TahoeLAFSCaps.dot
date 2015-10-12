@@ -1,5 +1,5 @@
 digraph {
-        graph [rankdir=LR, fontname="Helvetica", fontsize=14, bgcolor=transparent];
+        graph [rankdir=LR, bgcolor=transparent, imagepath="media"];
         
         secret [shape="note", style="filled", fillcolor="lightyellow"];        
         contents [shape="note", style="filled", fillcolor="lightgreen"];
@@ -9,21 +9,13 @@ digraph {
         subgraph {
                 rank=same;
                 
-                rw [label="writecap", shape="note", style="filled", fillcolor="lightblue"];
-                diminish1 [label="diminish", shape="box", style="filled", fillcolor="white"];
-        }
-
-        subgraph {
-                rank=same;
-                
-                r [label="readcap", shape="note", style="filled", fillcolor="lightblue"];                
-                diminish2 [label="diminish", shape="box", style="filled", fillcolor="white"];
+                r [label="readcap", shape="note", style="filled", fillcolor="lightblue"];      
+                diminish [label="diminish", shape="box", style="filled", fillcolor="white"];
         }        
         
         v [label="verifycap", shape="note", style="filled", fillcolor="lightblue"];
         
         secret -> mix;
         contents -> mix;
-
-        mix -> rw -> diminish1 -> r -> diminish2 -> v;
+        mix -> r -> diminish -> v;
 }
