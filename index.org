@@ -150,7 +150,7 @@
 
 *** Not a GitHub issue
 
-    OAuth's "scope" parameter encourages this
+    OAuth's ~scope~ parameter encourages this
 
 *** AutoScale
 
@@ -354,7 +354,7 @@
 *** We've tried this
 
     * Programming languages: E, Caja, ...
-    * Operating systems: EROS, Coyotos, (s)eL4, ...
+    * Operating systems: EROS, Coyotos, (se)L4, ...
     * Other systems: Tahoe-LAFS
 
 *** Really great features, e.g. in E
@@ -394,12 +394,14 @@
    UX UX UX UX UX UX UX UX
    UX UX UX UX UX UX UX UX
 
-** Seriously crypto people
+*** Seriously crypto people
 
    (Yes, this includes me)
 
    * Most programmers no longer do crypto
    * But cryptographers still do UX... poorly
+
+*** Cooperation,
 
 * Wrap-up
 
