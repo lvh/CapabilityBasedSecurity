@@ -323,7 +323,7 @@
    <img style="width:100%" src="./media/TahoeLAFSCaps.svg">
    #+END_HTML
 
-* Why aren't we all doing this already?
+* Why don't we do this already?
 
 ** Lots of alternatives
 
