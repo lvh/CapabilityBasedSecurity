@@ -251,10 +251,11 @@
 
 ** Capabilities
 
-   * First-class object
-   * Precise embodiment of authorization
+    #+ATTR_REVEAL: :frag (roll-in)
+   * First-class object, /is/ authorization
+   * Precise, can be attenuated
    * Can be communicated
-     * Possibly contained
+     * May be contained
    * Can not be forged
 
 ** Object capabilities
@@ -290,17 +291,19 @@
     * /Only/ in data center α
     * /Only/ delete servers made this way
 
+*** Can't we just improve ACLs?
+
+    Make them more precise?
+
 *** Dependent types-style problem
 
-    Most AC systems can express e.g.:
-
-    * Can create server
-    * Can delete server
-
-    That's too broad, I want:
-
-    * Can create server with image /A/, &c
-    * Can delete server made this way
+    #+ATTR_REVEAL: :frag (roll-in)
+    * Most AC systems can express e.g.:
+      * Create & delete servers
+      * (That's broader than usual!)
+    * That's too broad, I want:
+      * Can create server with image /A/, &c
+      * Can delete server made this way
 
 *** Even if we settle for imprecise & ugly
 
