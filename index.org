@@ -330,7 +330,7 @@
    * Classic privilege dropping
    * POSIX capabilities (~CAP_NET_BIND_SERVICE~ &c)
    * ~seccomp~, ~AppArmor~, ~SELinux~, ...
-   * ~tame()~, ~securelevel~
+   * ~tame()~, ~securelevel~, ...
    * ...
 
 *** Oh my, there are so many
@@ -340,7 +340,7 @@
 
 ** We sort-of are doing this already
 
-   * ~capsicum~
+   * ~capsicum~ (kernel, no crypto)
    * Webhooks (no confinement)
 
 *** Except of course, we aren't
