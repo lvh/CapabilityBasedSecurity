@@ -174,13 +174,11 @@
     * How do I impersonate a user?
     * Admin credentials (of course!)
 
+*** ☢ ☢ ☢ ☢ ☢
+
+    [[./media/MarieSklodowska.jpg]]
+
 *** Yay admin credentials
-
-   #+BEGIN_HTML
-   <img style="width:60%" src="./media/Explosive.svg">
-   #+END_HTML
-
-*** ☣ ☠ ☢
 
     * Accidentally commit to (public!) repo?
     * On development machine for staging runs?
@@ -291,17 +289,18 @@
     * /Only/ in data center α
     * /Only/ delete servers made this way
 
-*** Can't we just improve ACLs?
+*** Can't we just improve access control?
 
-    Make them more precise?
+    * Make them more precise?
+    *
 
 *** Dependent types-style problem
 
     #+ATTR_REVEAL: :frag (roll-in)
-    * Most AC systems can express e.g.:
+    * Most AC systems can express stuff like:
       * Create & delete servers
       * (That's broader than usual!)
-    * That's too broad, I want:
+    * That's still way too broad, I want:
       * Can create server with image /A/, &c
       * Can delete server made this way
 
