@@ -84,18 +84,23 @@
 <section id="slide-orgheadline8">
 <h3 id="orgheadline8">This talk</h3>
 <ul>
+<li>Flipping stuff upside down</li>
+<li>All of the hobby horses
+<ul>
 <li>Information security!</li>
 <li>Cryptography!</li>
 <li>Distributed systems!</li>
+
+</ul></li>
 
 </ul>
 
 </section>
 </section>
 <section>
-<section id="slide-orgheadline32">
-<h2 id="orgheadline32">Auth________‌n</h2>
-<div class="outline-text-2" id="text-orgheadline32">
+<section id="slide-orgheadline33">
+<h2 id="orgheadline33">Auth________‌n</h2>
+<div class="outline-text-2" id="text-orgheadline33">
 </div></section>
 <section id="slide-orgheadline10">
 <h3 id="orgheadline10">　</h3>
@@ -103,7 +108,7 @@
 
 </section>
 <section id="slide-orgheadline11">
-<h3 id="orgheadline11">Try to access a repo</h3>
+<h3 id="orgheadline11">Access a repo</h3>
 <p>
 <code>https://github.com/RackSec/secret</code>
 </p>
@@ -161,22 +166,18 @@ What happens when <i>authorization</i> breaks?
 <section id="slide-orgheadline14">
 <h4 id="orgheadline14">Authentication is tricky, too</h4>
 <p>
-(but let's focus on authorization failing)
+(but we'll focus on authorization)
 </p>
 
 </section>
 <section id="slide-orgheadline15">
-<h4 id="orgheadline15">Failing open ⇒ other failures worse</h4>
+<h4 id="orgheadline15">Failing open ⇒ fragile</h4>
 <ul>
-<li class="fragment roll-in">In most PLs, code can do anything
-<ul>
-<li>⇒ code execution ≡ game over</li>
-
-</ul></li>
+<li class="fragment roll-in">Code execution ≡ game over</li>
 <li class="fragment roll-in">Lots of ways to get code execution
 <ul>
-<li><code>pickle</code> (seriously, don't use pickles)</li>
-<li>Weird machines (seriously, write grammars)</li>
+<li><code>pickle</code></li>
+<li>Weird machines</li>
 <li>&#x2026;</li>
 
 </ul></li>
@@ -216,18 +217,17 @@ If I can run code, I can:
 
 </section>
 <section id="slide-orgheadline18">
-<h4 id="orgheadline18">(This is hopefully obvious)</h4>
+<h4 id="orgheadline18">Not very exciting</h4>
 <ul>
-<li>Running Python ≡ running Python?!</li>
-<li>Boring statement is boring</li>
-<li><i>Why</i>? Could it work differently?</li>
+<li>Sure, running Python ≡ running Python</li>
+<li>Does it have to work this way?</li>
 
 </ul>
 
 </section>
-<section id="slide-orgheadline31">
-<h3 id="orgheadline31">Imprecise</h3>
-<div class="outline-text-3" id="text-orgheadline31">
+<section id="slide-orgheadline32">
+<h3 id="orgheadline32">Imprecise authorization</h3>
+<div class="outline-text-3" id="text-orgheadline32">
 </div></section>
 <section id="slide-orgheadline20">
 <h4 id="orgheadline20">Waffle.io</h4>
@@ -245,14 +245,21 @@ If I can run code, I can:
 
 </section>
 <section id="slide-orgheadline23">
-<h4 id="orgheadline23">Not GitHub's fault</h4>
+<h4 id="orgheadline23">Repositories ≈ everything</h4>
+<p>
+All I wanted was an issue tracker!
+</p>
+
+</section>
+<section id="slide-orgheadline24">
+<h4 id="orgheadline24">Not GitHub/Waffle.io's fault</h4>
 <p>
 OAuth's <code>scope</code> parameter encourages this
 </p>
 
 </section>
-<section id="slide-orgheadline24">
-<h4 id="orgheadline24">AutoScale</h4>
+<section id="slide-orgheadline25">
+<h4 id="orgheadline25">AutoScale</h4>
 <ul>
 <li>Manages groups of servers</li>
 <li>Scale up and down easily</li>
@@ -260,8 +267,8 @@ OAuth's <code>scope</code> parameter encourages this
 </ul>
 
 </section>
-<section id="slide-orgheadline25">
-<h4 id="orgheadline25"><i>On behalf of</i> customers; just a tool</h4>
+<section id="slide-orgheadline26">
+<h4 id="orgheadline26">Scale on behalf of customers</h4>
 <ul>
 <li>Should work as if user did it directly</li>
 <li>Billing, audit logs, limits&#x2026;</li>
@@ -269,18 +276,19 @@ OAuth's <code>scope</code> parameter encourages this
 </ul>
 
 </section>
-<section id="slide-orgheadline26">
-<h4 id="orgheadline26">Make it work as if the user did it</h4>
+<section id="slide-orgheadline27">
+<h4 id="orgheadline27">Make it work as if the user did it</h4>
 <ul>
-<li class="fragment roll-in">Easiest solution: impersonate them</li>
+<li class="fragment roll-in">Easiest solution?</li>
+<li class="fragment roll-in">Impersonate them!</li>
 <li class="fragment roll-in">How do I impersonate a user?</li>
 <li class="fragment roll-in">Admin credentials (of course!)</li>
 
 </ul>
 
 </section>
-<section id="slide-orgheadline27">
-<h4 id="orgheadline27">☢ ☢ ☢ ☢ ☢</h4>
+<section id="slide-orgheadline28">
+<h4 id="orgheadline28">☢ ☢ ☢ ☢ ☢</h4>
 
 <div class="figure">
 <p><img src="./media/MarieSklodowska.jpg" alt="MarieSklodowska.jpg" />
@@ -288,8 +296,8 @@ OAuth's <code>scope</code> parameter encourages this
 </div>
 
 </section>
-<section id="slide-orgheadline28">
-<h4 id="orgheadline28">Yay admin credentials</h4>
+<section id="slide-orgheadline29">
+<h4 id="orgheadline29">Yay admin credentials</h4>
 <ul>
 <li>Accidentally commit to (public!) repo?</li>
 <li>On development machine for staging runs?</li>
@@ -301,8 +309,8 @@ A lot of people want those magic keys&#x2026;
 </p>
 
 </section>
-<section id="slide-orgheadline29">
-<h4 id="orgheadline29">☠ THREAT MODEL: MOSSAD ☠</h4>
+<section id="slide-orgheadline30">
+<h4 id="orgheadline30">☠ THREAT LEVEL: MOSSAD ☠</h4>
 <p>
 That's it, we're screwed
 </p>
@@ -314,8 +322,8 @@ We are going to be Mossad'ed upon
 <img style="width:80%" src="./media/MossadedUpon.png">
 
 </section>
-<section id="slide-orgheadline30">
-<h4 id="orgheadline30">☠ THREAT LEVEL: MOSSAD ☠</h4>
+<section id="slide-orgheadline31">
+<h4 id="orgheadline31">☠ THREAT LEVEL: MOSSAD ☠</h4>
 <img style="width:13%" src="./media/FBI.svg">
 <img style="width:13%" src="./media/PLA.svg">
 
@@ -342,45 +350,65 @@ each other before they get to me!
 </section>
 </section>
 <section>
-<section id="slide-orgheadline48">
-<h2 id="orgheadline48">Pies in the sky</h2>
+<section id="slide-orgheadline50">
+<h2 id="orgheadline50">Pies in the sky</h2>
 <img style="width:30%" src="./media/Pies.svg">
 
 </section>
-<section id="slide-orgheadline33">
-<h3 id="orgheadline33">I'm too young to die</h3>
-<p>
-What can we do to fix this?
-</p>
+<section id="slide-orgheadline34">
+<h3 id="orgheadline34">I don't want to die</h3>
 
 </section>
-<section id="slide-orgheadline34">
-<h3 id="orgheadline34">Principle of Least Privilege</h3>
+<section id="slide-orgheadline37">
+<h3 id="orgheadline37">What do we want?</h3>
+<div class="outline-text-3" id="text-orgheadline37">
+</div></section>
+<section id="slide-orgheadline35">
+<h4 id="orgheadline35">I don't want:</h4>
+<ul>
+<li>golden key to the cloud</li>
+<li>API key per customer</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline36">
+<h4 id="orgheadline36">What granularity do we want?</h4>
+<ul>
+<li class="fragment roll-in">API key per customer</li>
+<li class="fragment roll-in">Limited use (time, # of uses)</li>
+<li class="fragment roll-in">Trivial to rotate, revoke</li>
+<li class="fragment roll-in">With flavors: <i>{1, 2, 3}</i></li>
+<li class="fragment roll-in">With images: <i>{A, B}</i></li>
+<li class="fragment roll-in"><i>Only</i> in data center α</li>
+<li class="fragment roll-in"><i>Only</i> delete servers made this way</li>
+
+</ul>
+
+
+</section>
+<section id="slide-orgheadline38">
+<h3 id="orgheadline38">Principle of least privilege</h3>
 <p>
 "Don't give X more access than X needs"
 </p>
 
 </section>
-<section id="slide-orgheadline35">
-<h3 id="orgheadline35">But our tools are imprecise!</h3>
+<section id="slide-orgheadline39">
+<h3 id="orgheadline39">But our tools are imprecise!</h3>
 
 </section>
-<section id="slide-orgheadline36">
-<h3 id="orgheadline36">Copernican revolution</h3>
-<p>
-So far:
-</p>
-
+<section id="slide-orgheadline40">
+<h3 id="orgheadline40">So far, our tools work like this:</h3>
 <ol>
 <li>Authentication first class object</li>
 <li>Authorization flows from it</li>
 
 </ol>
 
-<p>
-Consider:
-</p>
-
+</section>
+<section id="slide-orgheadline41">
+<h3 id="orgheadline41">Copernican revolution</h3>
 <ol>
 <li>Authorization first class object</li>
 <li>(Authentication may flow from it)</li>
@@ -388,23 +416,45 @@ Consider:
 </ol>
 
 </section>
-<section id="slide-orgheadline37">
-<h3 id="orgheadline37">Capabilities</h3>
+<section id="slide-orgheadline42">
+<h3 id="orgheadline42">Capabilities</h3>
 <ul>
 <li class="fragment roll-in">First-class object, <i>is</i> authorization</li>
-<li class="fragment roll-in">Precise, can be attenuated</li>
+<li class="fragment roll-in">Precise
+<ul>
+<li>Can be attenuated</li>
+
+</ul></li>
 <li class="fragment roll-in">Can be communicated
 <ul>
 <li>May be contained</li>
 
 </ul></li>
-<li class="fragment roll-in">Can not be forged</li>
+<li class="fragment roll-in"><p>
+Can not be forged
+</p>
+
+<aside class="notes">
+<p>
+Can not be forged: strong crypto, hardware guarantees, kernel guarantees&#x2026;
+</p>
+
+</aside></li>
 
 </ul>
 
 </section>
-<section id="slide-orgheadline39">
-<h3 id="orgheadline39">Object capabilities</h3>
+<section id="slide-orgheadline43">
+<h3 id="orgheadline43">Attenuation (a.k.a diminishing)</h3>
+<ul>
+<li>In: cap that can do {X, Y, Z}</li>
+<li>Out: cap that can only do {X, Y}</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline45">
+<h3 id="orgheadline45">Object capabilities</h3>
 <p>
 To use e.g. sockets, you need:
 </p>
@@ -416,8 +466,8 @@ To use e.g. sockets, you need:
 </ul>
 
 </section>
-<section id="slide-orgheadline38">
-<h4 id="orgheadline38">OOP: making objects do stuff</h4>
+<section id="slide-orgheadline44">
+<h4 id="orgheadline44">OOP: making objects do stuff</h4>
 <p>
 Control references to objects
 </p>
@@ -431,44 +481,22 @@ Control what code can do
 </p>
 
 </section>
+<section id="slide-orgheadline49">
+<h3 id="orgheadline49">Can't we just improve access control?</h3>
+<ul>
+<li>Probably not</li>
+<li>Access control is already a mess
+<ul>
+<li>Scales poorly with fine granularity</li>
+
+</ul></li>
+<li>Dependently typed problem</li>
+
+</ul>
+
+</section>
 <section id="slide-orgheadline46">
-<h3 id="orgheadline46">What granularity do we want?</h3>
-<div class="outline-text-3" id="text-orgheadline46">
-</div></section>
-<section id="slide-orgheadline40">
-<h4 id="orgheadline40">I don't want:</h4>
-<ul>
-<li>golden key to the cloud</li>
-<li>API key per customer</li>
-
-</ul>
-
-</section>
-<section id="slide-orgheadline41">
-<h4 id="orgheadline41">What granularity do we want?</h4>
-<ul>
-<li class="fragment roll-in">API key per customer</li>
-<li class="fragment roll-in">Limited use (time, # of uses)</li>
-<li class="fragment roll-in">Trivial to rotate, revoke</li>
-<li class="fragment roll-in">For exactly these flavors: <i>{1, 2, 3}</i></li>
-<li class="fragment roll-in">For exactly these images: <i>{A, B}</i></li>
-<li class="fragment roll-in"><i>Only</i> in data center α</li>
-<li class="fragment roll-in"><i>Only</i> delete servers made this way</li>
-
-</ul>
-
-</section>
-<section id="slide-orgheadline42">
-<h4 id="orgheadline42">Can't we just improve access control?</h4>
-<ul>
-<li>Make them more precise?</li>
-<li></li>
-
-</ul>
-
-</section>
-<section id="slide-orgheadline43">
-<h4 id="orgheadline43">Dependent types-style problem</h4>
+<h4 id="orgheadline46">Dependent typed problem</h4>
 <ul>
 <li class="fragment roll-in">Most AC systems can express stuff like:
 <ul>
@@ -486,64 +514,59 @@ Control what code can do
 </ul>
 
 </section>
-<section id="slide-orgheadline44">
-<h4 id="orgheadline44">Even if we settle for imprecise &amp; ugly</h4>
+<section id="slide-orgheadline47">
+<h4 id="orgheadline47">Let's settle for ugly &amp; imprecise</h4>
 <ul>
-<li>Roles are the path to the dark side</li>
-<li>Roles lead to Active Directory</li>
-<li>Active Directory leads to anger</li>
-<li>Anger leads to hate</li>
-<li>Hate leads to suffering</li>
+<li class="fragment roll-in">Roles are the path to the dark side</li>
+<li class="fragment roll-in">Roles lead to Active Directory</li>
+<li class="fragment roll-in">Active Directory leads to anger</li>
+<li class="fragment roll-in">Anger leads to hate</li>
+<li class="fragment roll-in">Hate leads to suffering</li>
 
 </ul>
 
 </section>
-<section id="slide-orgheadline45">
-<h4 id="orgheadline45">Finally, why would you <i>want</i> that?</h4>
+<section id="slide-orgheadline48">
+<h4 id="orgheadline48">Finally, why would you <i>want</i> that?</h4>
 <p>
 Cryptography, not pinky swears
 </p>
 
 </section>
-<section id="slide-orgheadline47">
-<h3 id="orgheadline47">Attenuation (a.k.a diminishing)</h3>
-<ul>
-<li>In: cap that can do {X, Y, Z}</li>
-<li>Out: cap that can only do {X, Y}</li>
-
-</ul>
-
-</section>
 </section>
 <section>
-<section id="slide-orgheadline52">
-<h2 id="orgheadline52">Okay, great, but how do I actually do that?</h2>
-<div class="outline-text-2" id="text-orgheadline52">
+<section id="slide-orgheadline54">
+<h2 id="orgheadline54">How do we do that?</h2>
+<div class="outline-text-2" id="text-orgheadline54">
 </div></section>
-<section id="slide-orgheadline49">
-<h3 id="orgheadline49">Easy mode: local</h3>
+<section id="slide-orgheadline51">
+<h3 id="orgheadline51">Easy mode: local</h3>
 
 </section>
-<section id="slide-orgheadline51">
-<h3 id="orgheadline51">Crypto, not pinky swears</h3>
-<div class="outline-text-3" id="text-orgheadline51">
+<section id="slide-orgheadline53">
+<h3 id="orgheadline53">Crypto, not pinky swears</h3>
+<div class="outline-text-3" id="text-orgheadline53">
 </div></section>
-<section id="slide-orgheadline50">
-<h4 id="orgheadline50">Tahoe-LAFS</h4>
+<section id="slide-orgheadline52">
+<h4 id="orgheadline52">Tahoe-LAFS</h4>
 <img style="width:100%" src="./media/TahoeLAFSCaps.svg">
 
 </section>
 </section>
 <section>
-<section id="slide-orgheadline64">
-<h2 id="orgheadline64">Why don't we do this already?</h2>
-<div class="outline-text-2" id="text-orgheadline64">
+<section id="slide-orgheadline66">
+<h2 id="orgheadline66">Why don't we do that already?</h2>
+<div class="outline-text-2" id="text-orgheadline66">
 </div></section>
-<section id="slide-orgheadline54">
-<h3 id="orgheadline54">Lots of alternatives</h3>
+<section id="slide-orgheadline56">
+<h3 id="orgheadline56">Lots of alternatives</h3>
 <ul>
 <li>Classic privilege dropping</li>
-<li>POSIX capabilities (<code>CAP_NET_BIND_SERVICE</code> &amp;c)</li>
+<li>POSIX capabilities
+<ul>
+<li><code>CAP_NET_BIND_SERVICE</code> &amp;c</li>
+
+</ul></li>
 <li><code>seccomp</code>, <code>AppArmor</code>, <code>SELinux</code>, &#x2026;</li>
 <li><code>tame()</code>, <code>securelevel</code>, &#x2026;</li>
 <li>&#x2026;</li>
@@ -551,8 +574,8 @@ Cryptography, not pinky swears
 </ul>
 
 </section>
-<section id="slide-orgheadline53">
-<h4 id="orgheadline53">Oh my, there are so many</h4>
+<section id="slide-orgheadline55">
+<h4 id="orgheadline55">Oh my, there are so many</h4>
 <ul>
 <li>That should probably tell you something</li>
 <li>Mostly opt-in or de-facto opt-in</li>
@@ -560,40 +583,42 @@ Cryptography, not pinky swears
 </ul>
 
 </section>
-<section id="slide-orgheadline60">
-<h3 id="orgheadline60">We sort-of are doing this already</h3>
+<section id="slide-orgheadline62">
+<h3 id="orgheadline62">We sort-of are doing this already</h3>
 <ul>
-<li><code>capsicum</code> (kernel, no crypto)</li>
 <li>Webhooks (no confinement)</li>
+<li><code>capsicum</code> (kernel, no crypto)</li>
 
 </ul>
 
 </section>
-<section id="slide-orgheadline55">
-<h4 id="orgheadline55">Except of course, we aren't</h4>
+<section id="slide-orgheadline57">
+<h4 id="orgheadline57">Except of course, we aren't</h4>
 <p>
 How many of you:
 </p>
 
 <ul>
 <li class="fragment roll-in">&#x2026; have Python software running in production?</li>
-<li class="fragment roll-in">&#x2026; that can only access exactly the resources it needs?</li>
+<li class="fragment roll-in">&#x2026; that can only access the resources it needs?</li>
+<li class="fragment roll-in">&#x2026; have used object-capability systems?</li>
+<li class="fragment roll-in">&#x2026; are running them in production now?</li>
 
 </ul>
 
 </section>
-<section id="slide-orgheadline56">
-<h4 id="orgheadline56">We've tried this</h4>
+<section id="slide-orgheadline58">
+<h4 id="orgheadline58">We've tried this</h4>
 <ul>
-<li>Programming languages: E, Caja, &#x2026;</li>
-<li>Operating systems: EROS, Coyotos, (se)L4, &#x2026;</li>
-<li>Other systems: Tahoe-LAFS</li>
+<li>Programming languages: E, Caja…</li>
+<li>Operating systems: EROS, Coyotos, (se)L4…</li>
+<li>Other systems: Tahoe-LAFS…</li>
 
 </ul>
 
 </section>
-<section id="slide-orgheadline57">
-<h4 id="orgheadline57">Really great features, e.g. in E</h4>
+<section id="slide-orgheadline59">
+<h4 id="orgheadline59">Really great features, e.g. in E</h4>
 <ul>
 <li>Secure (crypto, not pinky swears)</li>
 <li>Persistent</li>
@@ -603,15 +628,15 @@ How many of you:
 </ul>
 
 </section>
-<section id="slide-orgheadline58">
-<h4 id="orgheadline58">It didn't pan out</h4>
+<section id="slide-orgheadline60">
+<h4 id="orgheadline60">It didn't pan out</h4>
 <p>
 Has <i>anyone</i> heard of any of these systems?
 </p>
 
 </section>
-<section id="slide-orgheadline59">
-<h4 id="orgheadline59">Why didn't it pan out?</h4>
+<section id="slide-orgheadline61">
+<h4 id="orgheadline61">Why didn't it pan out?</h4>
 <p>
 (Reality is complex, I'm simplifying, theorizing)
 </p>
@@ -631,8 +656,8 @@ Has <i>anyone</i> heard of any of these systems?
 </ul>
 
 </section>
-<section id="slide-orgheadline63">
-<h3 id="orgheadline63">How can we do better?</h3>
+<section id="slide-orgheadline65">
+<h3 id="orgheadline65">How can we do better?</h3>
 <p>
 UX UX UX UX UX UX UX UX
 UX UX UX UX UX UX UX UX
@@ -651,8 +676,8 @@ UX UX UX UX UX UX UX UX
 </p>
 
 </section>
-<section id="slide-orgheadline61">
-<h4 id="orgheadline61">Seriously crypto people</h4>
+<section id="slide-orgheadline63">
+<h4 id="orgheadline63">Seriously crypto people</h4>
 <p>
 (Yes, this includes me)
 </p>
@@ -664,18 +689,18 @@ UX UX UX UX UX UX UX UX
 </ul>
 
 </section>
-<section id="slide-orgheadline62">
-<h4 id="orgheadline62">Cooperation,</h4>
+<section id="slide-orgheadline64">
+<h4 id="orgheadline64">Cooperation,</h4>
 
 </section>
 </section>
 <section>
-<section id="slide-orgheadline67">
-<h2 id="orgheadline67">Wrap-up</h2>
-<div class="outline-text-2" id="text-orgheadline67">
+<section id="slide-orgheadline69">
+<h2 id="orgheadline69">Wrap-up</h2>
+<div class="outline-text-2" id="text-orgheadline69">
 </div></section>
-<section id="slide-orgheadline65">
-<h3 id="orgheadline65">Thanks, everyone!</h3>
+<section id="slide-orgheadline67">
+<h3 id="orgheadline67">Thanks, everyone!</h3>
 <ul>
 <li>Everyone for putting up with my rant</li>
 <li>PyCon PL organizers for inviting me 💖</li>
@@ -683,14 +708,14 @@ UX UX UX UX UX UX UX UX
 </ul>
 
 </section>
-<section id="slide-orgheadline66">
-<h3 id="orgheadline66">Questions?</h3>
+<section id="slide-orgheadline68">
+<h3 id="orgheadline68">Questions?</h3>
 
 </section>
 </section>
 <section>
-<section id="slide-orgheadline68">
-<h2 id="orgheadline68">Slides</h2>
+<section id="slide-orgheadline70">
+<h2 id="orgheadline70">Slides</h2>
 <p>
 <code>https://www.lvh.io/CapabilityBasedSecurity</code>
 </p>

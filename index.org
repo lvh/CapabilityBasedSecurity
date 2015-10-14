@@ -48,9 +48,11 @@
 
 ** This talk
 
-   * Information security!
-   * Cryptography!
-   * Distributed systems!
+   * Flipping stuff upside down
+   * All of the hobby horses
+     * Information security!
+     * Cryptography!
+     * Distributed systems!
 
 * Auth________‌n
 
@@ -60,7 +62,7 @@
    <img style="width:60%" src="./media/Octocat.svg">
    #+END_HTML
 
-** Try to access a repo
+** Access a repo
 
    ~https://github.com/RackSec/secret~
 
@@ -94,16 +96,15 @@
 
 *** Authentication is tricky, too
 
-    (but let's focus on authorization failing)
+    (but we'll focus on authorization)
 
-*** Failing open ⇒ other failures worse
+*** Failing open ⇒ fragile
 
     #+ATTR_REVEAL: :frag (roll-in)
-    * In most PLs, code can do anything
-      * ⇒ code execution ≡ game over
+    * Code execution ≡ game over
     * Lots of ways to get code execution
-      * ~pickle~ (seriously, don't use pickles)
-      * Weird machines (seriously, write grammars)
+      * ~pickle~
+      * Weird machines
       * ...
 
 *** Python code can do anything
@@ -127,13 +128,12 @@
 
     #+END_SRC
 
-*** (This is hopefully obvious)
+*** Not very exciting
 
-    * Running Python ≡ running Python?!
-    * Boring statement is boring
-    * /Why/? Could it work differently?
+    * Sure, running Python ≡ running Python
+    * Does it have to work this way?
 
-** Imprecise
+** Imprecise authorization
 
 *** Waffle.io
 
@@ -153,7 +153,11 @@
    <img style="width:80%" src="./media/WaffleIoAuthorizatonDetails.png">
    #+END_HTML
 
-*** Not GitHub's fault
+*** Repositories ≈ everything
+
+    All I wanted was an issue tracker!
+
+*** Not GitHub/Waffle.io's fault
 
     OAuth's ~scope~ parameter encourages this
 
@@ -162,7 +166,7 @@
    * Manages groups of servers
    * Scale up and down easily
 
-*** /On behalf of/ customers; just a tool
+*** Scale on behalf of customers
 
     * Should work as if user did it directly
     * Billing, audit logs, limits...
@@ -170,7 +174,8 @@
 *** Make it work as if the user did it
 
     #+ATTR_REVEAL: :frag (roll-in)
-    * Easiest solution: impersonate them
+    * Easiest solution?
+    * Impersonate them!
     * How do I impersonate a user?
     * Admin credentials (of course!)
 
@@ -185,7 +190,7 @@
 
     A lot of people want those magic keys...
 
-*** ☠ THREAT MODEL: MOSSAD ☠
+*** ☠ THREAT LEVEL: MOSSAD ☠
 
     That's it, we're screwed
 
@@ -225,24 +230,39 @@
     <img style="width:30%" src="./media/Pies.svg">
     #+END_HTML
 
-** I'm too young to die
+** I don't want to die
 
-   What can we do to fix this?
+** What do we want?
 
-** Principle of Least Privilege
+*** I don't want:
+
+   * golden key to the cloud
+   * API key per customer
+
+*** What granularity do we want?
+
+    #+ATTR_REVEAL: :frag (roll-in)
+    * API key per customer
+    * Limited use (time, # of uses)
+    * Trivial to rotate, revoke
+    * With flavors: /{1, 2, 3}/
+    * With images: /{A, B}/
+    * /Only/ in data center α
+    * /Only/ delete servers made this way
+
+
+** Principle of least privilege
 
    "Don't give X more access than X needs"
 
 ** But our tools are imprecise!
 
-** Copernican revolution
-
-   So far:
+** So far, our tools work like this:
 
    1. Authentication first class object
    2. Authorization flows from it
 
-   Consider:
+** Copernican revolution
 
    1. Authorization first class object
    2. (Authentication may flow from it)
@@ -251,10 +271,20 @@
 
     #+ATTR_REVEAL: :frag (roll-in)
    * First-class object, /is/ authorization
-   * Precise, can be attenuated
+   * Precise
+     * Can be attenuated
    * Can be communicated
      * May be contained
    * Can not be forged
+
+     #+BEGIN_NOTES
+     Can not be forged: strong crypto, hardware guarantees, kernel guarantees...
+     #+END_NOTES
+
+** Attenuation (a.k.a diminishing)
+
+   * In: cap that can do {X, Y, Z}
+   * Out: cap that can only do {X, Y}
 
 ** Object capabilities
 
@@ -271,30 +301,14 @@
 
     Control what code can do
 
-** What granularity do we want?
+** Can't we just improve access control?
 
-*** I don't want:
+    * Probably not
+    * Access control is already a mess
+      * Scales poorly with fine granularity
+    * Dependently typed problem
 
-   * golden key to the cloud
-   * API key per customer
-
-*** What granularity do we want?
-
-    #+ATTR_REVEAL: :frag (roll-in)
-    * API key per customer
-    * Limited use (time, # of uses)
-    * Trivial to rotate, revoke
-    * For exactly these flavors: /{1, 2, 3}/
-    * For exactly these images: /{A, B}/
-    * /Only/ in data center α
-    * /Only/ delete servers made this way
-
-*** Can't we just improve access control?
-
-    * Make them more precise?
-    *
-
-*** Dependent types-style problem
+*** Dependent typed problem
 
     #+ATTR_REVEAL: :frag (roll-in)
     * Most AC systems can express stuff like:
@@ -304,8 +318,9 @@
       * Can create server with image /A/, &c
       * Can delete server made this way
 
-*** Even if we settle for imprecise & ugly
+*** Let's settle for ugly & imprecise
 
+    #+ATTR_REVEAL: :frag (roll-in)
     * Roles are the path to the dark side
     * Roles lead to Active Directory
     * Active Directory leads to anger
@@ -316,12 +331,7 @@
 
     Cryptography, not pinky swears
 
-** Attenuation (a.k.a diminishing)
-
-   * In: cap that can do {X, Y, Z}
-   * Out: cap that can only do {X, Y}
-
-* Okay, great, but how do I actually do that?
+* How do we do that?
 
 ** Easy mode: local
 
@@ -333,12 +343,13 @@
    <img style="width:100%" src="./media/TahoeLAFSCaps.svg">
    #+END_HTML
 
-* Why don't we do this already?
+* Why don't we do that already?
 
 ** Lots of alternatives
 
    * Classic privilege dropping
-   * POSIX capabilities (~CAP_NET_BIND_SERVICE~ &c)
+   * POSIX capabilities
+     * ~CAP_NET_BIND_SERVICE~ &c
    * ~seccomp~, ~AppArmor~, ~SELinux~, ...
    * ~tame()~, ~securelevel~, ...
    * ...
@@ -350,8 +361,8 @@
 
 ** We sort-of are doing this already
 
-   * ~capsicum~ (kernel, no crypto)
    * Webhooks (no confinement)
+   * ~capsicum~ (kernel, no crypto)
 
 *** Except of course, we aren't
 
@@ -359,13 +370,15 @@
 
     #+ATTR_REVEAL: :frag (roll-in)
     * ... have Python software running in production?
-    * ... that can only access exactly the resources it needs?
+    * ... that can only access the resources it needs?
+    * ... have used object-capability systems?
+    * ... are running them in production now?
 
 *** We've tried this
 
-    * Programming languages: E, Caja, ...
-    * Operating systems: EROS, Coyotos, (se)L4, ...
-    * Other systems: Tahoe-LAFS
+    * Programming languages: E, Caja…
+    * Operating systems: EROS, Coyotos, (se)L4…
+    * Other systems: Tahoe-LAFS…
 
 *** Really great features, e.g. in E
 
