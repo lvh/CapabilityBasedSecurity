@@ -23,5 +23,3 @@ if [[ -d "$ORG_DIR" ]]; then
 else
     echo "No org-mode directory found."
 fi
-
-(set-fontset-font t 'unicode "Apple Color Emoji" nil 'prepend)
