@@ -129,13 +129,13 @@
     * Should work as if user did it directly
     * Billing, audit logs, limits...
 
-*** Make it work as if the user did it
+*** As if the user did it themselves
 
     #+ATTR_REVEAL: :frag (roll-in)
     * Easiest solution?
-    * Impersonate them!
+      * Impersonate them!
     * How do I impersonate a user?
-    * Admin credentials (of course!)
+      * Admin credentials (of course!)
 
 *** ☢ ☢ ☢ ☢ ☢
 
@@ -146,7 +146,7 @@
     * Accidentally commit to (public!) repo?
     * On development machine for staging runs?
 
-    A lot of people want those magic keys...
+    A lot of people want those magic keys!
 
 *** ☠ THREAT LEVEL: MOSSAD ☠
 
@@ -188,16 +188,7 @@
     <img style="width:30%" src="./media/Pies.svg">
     #+END_HTML
 
-** I don't want to die
-
-** What do we want?
-
-*** I don't want:
-
-   * golden key to the cloud
-   * API key per customer
-
-*** What granularity do we want?
+** What do I want?
 
     #+ATTR_REVEAL: :frag (roll-in)
     * API key per customer
@@ -225,11 +216,11 @@
 ** Capabilities
 
     #+ATTR_REVEAL: :frag (roll-in)
-   * First-class object, /is/ authorization
+   * First-class object
    * Precise
      * Can be attenuated
    * Can be communicated
-     * May be contained
+     * Might be contained
    * Can not be forged
 
      #+BEGIN_NOTES
@@ -286,7 +277,7 @@
 
 * How do we do that?
 
-** Easy mode: local
+** "Easy" mode: local
 
 ** Crypto, not pinky swears
 
@@ -294,6 +285,18 @@
 
    #+BEGIN_HTML
    <img style="width:100%" src="./media/TahoeLAFSCaps.svg">
+   #+END_HTML
+
+*** Icecap
+
+   #+BEGIN_HTML
+   <img style="width:100%" src="./media/IcecapCaps.svg">
+   #+END_HTML
+
+*** Icecap
+
+   #+BEGIN_HTML
+   <img style="width:100%" src="./media/IcecapDependencies.svg">
    #+END_HTML
 
 * Why don't we do that already?

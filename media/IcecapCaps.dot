@@ -1,0 +1,16 @@
+digraph {
+        graph [rankdir=LR, bgcolor=transparent, imagepath="media"];
+        
+        secret1 [label="long-term secret", shape="note", style="filled", fillcolor="lightyellow"];  
+        secret1 [label="per-cap secret", shape="note", style="filled", fillcolor="lightgreen"];
+
+        mix [shape="box", style="filled", fillcolor="white"];        
+
+        index [label="index", shape="note", style="filled", fillcolor="lightblue"];      
+        capkey [label="capkey", shape="note", style="filled", fillcolor="lightblue"];        
+        
+        secret -> mix;
+        contents -> mix;
+        mix -> index;
+        mix -> capkey;               
+}
