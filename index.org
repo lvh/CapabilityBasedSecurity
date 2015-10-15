@@ -288,6 +288,9 @@
 
 ** "Easy" mode: local
 
+   * Memory safe languages
+     * ASLR-like, Erlang-like
+
 ** Crypto, not pinky swears
 
 *** Tahoe-LAFS
@@ -384,13 +387,16 @@
 
 *** Seriously crypto people
 
-   (Yes, this includes me)
+    (Yes, this includes me)
 
-   * Most programmers know not to do crypto
-   * But cryptographers still do UX... poorly
+    * Most programmers know not to do crypto
+    * But cryptographers still do UX... poorly
 
 *** Cooperation & diversity FTW
 
+    * Different expertise
+    * More points of view
+    * More experiences
 
 * Wrap-up
 
