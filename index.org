@@ -393,6 +393,8 @@
     * Most programmers know not to do crypto
     * But cryptographers still do UX... poorly
 
+*** Echo chamber
+
 *** Cooperation & diversity FTW
 
     * Different expertise
