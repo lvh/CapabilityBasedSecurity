@@ -246,8 +246,8 @@
 
    To use e.g. sockets, you need:
 
-   * The ~socket~ module
-   * A reference to a socket
+   * ~socket~ & ~os~ modules
+   * Reference to a socket
 
 *** OOP: making objects do stuff
 
@@ -262,7 +262,7 @@
     * Probably not; already a mess
     * Scales poorly with fine granularity
 
-*** Dependent typed problem
+*** Dependently typed problem
 
     #+ATTR_REVEAL: :frag (roll-in)
     * Most systems express roles, classes
