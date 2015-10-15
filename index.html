@@ -290,8 +290,8 @@ each other before they get to me!
 </section>
 </section>
 <section>
-<section id="slide-orgheadline41">
-<h2 id="orgheadline41">Pies in the sky</h2>
+<section id="slide-orgheadline42">
+<h2 id="orgheadline42">Pies in the sky</h2>
 <img style="width:30%" src="./media/Pies.svg">
 
 </section>
@@ -309,15 +309,32 @@ each other before they get to me!
 </ul>
 
 </section>
-<section id="slide-orgheadline30">
-<h3 id="orgheadline30">Principle of least privilege</h3>
+<section id="slide-orgheadline31">
+<h3 id="orgheadline31">Principle of least privilege</h3>
 <p>
 "Don't give X more access than X needs"
 </p>
 
 </section>
-<section id="slide-orgheadline31">
-<h3 id="orgheadline31">But our tools are imprecise!</h3>
+<section id="slide-orgheadline30">
+<h4 id="orgheadline30">Applied to real life</h4>
+<p>
+If you owe someone 100 zł, do you:
+</p>
+
+<ul>
+<li>give them a stówka/make a bank transfer</li>
+<li>Give them your bank credentials</li>
+
+</ul>
+
+</section>
+<section id="slide-orgheadline32">
+<h3 id="orgheadline32">Principle of least privilege</h3>
+<p>
+But our tools are imprecise!
+</p>
+
 <ol>
 <li>Authentication first class object</li>
 <li>Authorization flows from it</li>
@@ -325,8 +342,8 @@ each other before they get to me!
 </ol>
 
 </section>
-<section id="slide-orgheadline32">
-<h3 id="orgheadline32">Copernican revolution</h3>
+<section id="slide-orgheadline33">
+<h3 id="orgheadline33">Copernican revolution</h3>
 <ol>
 <li>Authorization first class object</li>
 <li>(Authentication may flow from it)</li>
@@ -334,8 +351,8 @@ each other before they get to me!
 </ol>
 
 </section>
-<section id="slide-orgheadline33">
-<h3 id="orgheadline33">Capabilities</h3>
+<section id="slide-orgheadline34">
+<h3 id="orgheadline34">Capabilities</h3>
 <ul>
 <li class="fragment roll-in">First-class object</li>
 <li class="fragment roll-in">Precise
@@ -362,8 +379,8 @@ Can not be forged: strong crypto, hardware guarantees, kernel guarantees&#x2026;
 </ul>
 
 </section>
-<section id="slide-orgheadline34">
-<h3 id="orgheadline34">Attenuation (a.k.a diminishing)</h3>
+<section id="slide-orgheadline35">
+<h3 id="orgheadline35">Attenuation (a.k.a diminishing)</h3>
 <ul>
 <li>In: cap that can do {X, Y, Z}</li>
 <li>Out: cap that can only do {X, Y}</li>
@@ -371,8 +388,8 @@ Can not be forged: strong crypto, hardware guarantees, kernel guarantees&#x2026;
 </ul>
 
 </section>
-<section id="slide-orgheadline36">
-<h3 id="orgheadline36">Object capabilities</h3>
+<section id="slide-orgheadline37">
+<h3 id="orgheadline37">Object capabilities</h3>
 <p>
 To use e.g. sockets, you need:
 </p>
@@ -384,8 +401,8 @@ To use e.g. sockets, you need:
 </ul>
 
 </section>
-<section id="slide-orgheadline35">
-<h4 id="orgheadline35">OOP: making objects do stuff</h4>
+<section id="slide-orgheadline36">
+<h4 id="orgheadline36">OOP: making objects do stuff</h4>
 <p>
 Control references to objects
 </p>
@@ -399,8 +416,8 @@ Control what code can do
 </p>
 
 </section>
-<section id="slide-orgheadline40">
-<h3 id="orgheadline40">Can we fix access control?</h3>
+<section id="slide-orgheadline41">
+<h3 id="orgheadline41">Can we fix access control?</h3>
 <ul>
 <li>Probably not; already a mess</li>
 <li>Scales poorly with fine granularity</li>
@@ -408,8 +425,8 @@ Control what code can do
 </ul>
 
 </section>
-<section id="slide-orgheadline37">
-<h4 id="orgheadline37">Dependent typed problem</h4>
+<section id="slide-orgheadline38">
+<h4 id="orgheadline38">Dependent typed problem</h4>
 <ul>
 <li class="fragment roll-in">Most systems express roles, classes
 <ul>
@@ -427,8 +444,8 @@ Control what code can do
 </ul>
 
 </section>
-<section id="slide-orgheadline38">
-<h4 id="orgheadline38">Let's settle for ugly &amp; imprecise</h4>
+<section id="slide-orgheadline39">
+<h4 id="orgheadline39">Let's settle for ugly &amp; imprecise</h4>
 <ul>
 <li class="fragment roll-in">Roles are the path to the dark side</li>
 <li class="fragment roll-in">Roles lead to Active Directory</li>
@@ -439,8 +456,8 @@ Control what code can do
 </ul>
 
 </section>
-<section id="slide-orgheadline39">
-<h4 id="orgheadline39">Finally, why would you <i>want</i> that?</h4>
+<section id="slide-orgheadline40">
+<h4 id="orgheadline40">Finally, why would you <i>want</i> that?</h4>
 <p>
 Cryptography, not pinky swears
 </p>
@@ -448,41 +465,41 @@ Cryptography, not pinky swears
 </section>
 </section>
 <section>
-<section id="slide-orgheadline47">
-<h2 id="orgheadline47">How do we do that?</h2>
-<div class="outline-text-2" id="text-orgheadline47">
-</div></section>
-<section id="slide-orgheadline42">
-<h3 id="orgheadline42">"Easy" mode: local</h3>
-
-</section>
-<section id="slide-orgheadline46">
-<h3 id="orgheadline46">Crypto, not pinky swears</h3>
-<div class="outline-text-3" id="text-orgheadline46">
+<section id="slide-orgheadline48">
+<h2 id="orgheadline48">How do we do that?</h2>
+<div class="outline-text-2" id="text-orgheadline48">
 </div></section>
 <section id="slide-orgheadline43">
-<h4 id="orgheadline43">Tahoe-LAFS</h4>
-<img style="width:100%" src="./media/TahoeLAFSCaps.svg">
+<h3 id="orgheadline43">"Easy" mode: local</h3>
 
 </section>
+<section id="slide-orgheadline47">
+<h3 id="orgheadline47">Crypto, not pinky swears</h3>
+<div class="outline-text-3" id="text-orgheadline47">
+</div></section>
 <section id="slide-orgheadline44">
-<h4 id="orgheadline44">Icecap</h4>
-<img style="width:100%" src="./media/IcecapCaps.svg">
+<h4 id="orgheadline44">Tahoe-LAFS</h4>
+<img style="width:100%" src="./media/TahoeLAFSCaps.svg">
 
 </section>
 <section id="slide-orgheadline45">
 <h4 id="orgheadline45">Icecap</h4>
+<img style="width:100%" src="./media/IcecapCaps.svg">
+
+</section>
+<section id="slide-orgheadline46">
+<h4 id="orgheadline46">Icecap</h4>
 <img style="width:50%" src="./media/IcecapDependencies.svg">
 
 </section>
 </section>
 <section>
-<section id="slide-orgheadline59">
-<h2 id="orgheadline59">Why don't we do that already?</h2>
-<div class="outline-text-2" id="text-orgheadline59">
+<section id="slide-orgheadline60">
+<h2 id="orgheadline60">Why don't we do that already?</h2>
+<div class="outline-text-2" id="text-orgheadline60">
 </div></section>
-<section id="slide-orgheadline49">
-<h3 id="orgheadline49">Lots of alternatives</h3>
+<section id="slide-orgheadline50">
+<h3 id="orgheadline50">Lots of alternatives</h3>
 <ul>
 <li>Classic privilege dropping</li>
 <li>POSIX capabilities
@@ -497,8 +514,8 @@ Cryptography, not pinky swears
 </ul>
 
 </section>
-<section id="slide-orgheadline48">
-<h4 id="orgheadline48">Oh my, there are so many</h4>
+<section id="slide-orgheadline49">
+<h4 id="orgheadline49">Oh my, there are so many</h4>
 <ul>
 <li>That should probably tell you something</li>
 <li>Mostly opt-in or de-facto opt-in</li>
@@ -506,8 +523,8 @@ Cryptography, not pinky swears
 </ul>
 
 </section>
-<section id="slide-orgheadline55">
-<h3 id="orgheadline55">We sort-of are doing this already</h3>
+<section id="slide-orgheadline56">
+<h3 id="orgheadline56">We use caps already, sort-of</h3>
 <ul>
 <li>Webhooks (no confinement)</li>
 <li><code>capsicum</code> (kernel, no crypto)</li>
@@ -515,8 +532,8 @@ Cryptography, not pinky swears
 </ul>
 
 </section>
-<section id="slide-orgheadline50">
-<h4 id="orgheadline50">Except of course, we aren't</h4>
+<section id="slide-orgheadline51">
+<h4 id="orgheadline51">Just not consistently</h4>
 <p>
 How many of you:
 </p>
@@ -530,8 +547,8 @@ How many of you:
 </ul>
 
 </section>
-<section id="slide-orgheadline51">
-<h4 id="orgheadline51">We've tried this</h4>
+<section id="slide-orgheadline52">
+<h4 id="orgheadline52">We've tried this</h4>
 <ul>
 <li>Programming languages: E, Caja…</li>
 <li>Operating systems: EROS, Coyotos, (se)L4…</li>
@@ -540,8 +557,8 @@ How many of you:
 </ul>
 
 </section>
-<section id="slide-orgheadline52">
-<h4 id="orgheadline52">Really great features, e.g. in E</h4>
+<section id="slide-orgheadline53">
+<h4 id="orgheadline53">Really great features, e.g. in E</h4>
 <ul>
 <li>Secure (crypto, not pinky swears)</li>
 <li>Persistent</li>
@@ -551,15 +568,15 @@ How many of you:
 </ul>
 
 </section>
-<section id="slide-orgheadline53">
-<h4 id="orgheadline53">It didn't pan out</h4>
+<section id="slide-orgheadline54">
+<h4 id="orgheadline54">It didn't pan out</h4>
 <p>
 Has <i>anyone</i> heard of any of these systems?
 </p>
 
 </section>
-<section id="slide-orgheadline54">
-<h4 id="orgheadline54">Why didn't it pan out?</h4>
+<section id="slide-orgheadline55">
+<h4 id="orgheadline55">Why didn't it pan out?</h4>
 <p>
 (Reality is complex, I'm simplifying, theorizing)
 </p>
@@ -570,7 +587,7 @@ Has <i>anyone</i> heard of any of these systems?
 <li>Nobody wants to re-write their project</li>
 
 </ul></li>
-<li>Security often not the priority
+<li>Security often not a priority
 <ul>
 <li>(see Building Secure Systems, PyCon 2015)</li>
 
@@ -579,8 +596,8 @@ Has <i>anyone</i> heard of any of these systems?
 </ul>
 
 </section>
-<section id="slide-orgheadline58">
-<h3 id="orgheadline58">How can we do better?</h3>
+<section id="slide-orgheadline59">
+<h3 id="orgheadline59">How can we do better?</h3>
 <p>
 UX UX UX UX UX UX UX UX
 UX UX UX UX UX UX UX UX
@@ -599,8 +616,8 @@ UX UX UX UX UX UX UX UX
 </p>
 
 </section>
-<section id="slide-orgheadline56">
-<h4 id="orgheadline56">Seriously crypto people</h4>
+<section id="slide-orgheadline57">
+<h4 id="orgheadline57">Seriously crypto people</h4>
 <p>
 (Yes, this includes me)
 </p>
@@ -612,19 +629,19 @@ UX UX UX UX UX UX UX UX
 </ul>
 
 </section>
-<section id="slide-orgheadline57">
-<h4 id="orgheadline57">Cooperation &amp; diversity FTW</h4>
+<section id="slide-orgheadline58">
+<h4 id="orgheadline58">Cooperation &amp; diversity FTW</h4>
 
 
 </section>
 </section>
 <section>
-<section id="slide-orgheadline62">
-<h2 id="orgheadline62">Wrap-up</h2>
-<div class="outline-text-2" id="text-orgheadline62">
+<section id="slide-orgheadline63">
+<h2 id="orgheadline63">Wrap-up</h2>
+<div class="outline-text-2" id="text-orgheadline63">
 </div></section>
-<section id="slide-orgheadline60">
-<h3 id="orgheadline60">Thanks, everyone!</h3>
+<section id="slide-orgheadline61">
+<h3 id="orgheadline61">Thanks, everyone!</h3>
 <ul>
 <li>Everyone for putting up with my rant</li>
 <li>PyCon PL organizers for inviting me 💖</li>
@@ -632,14 +649,14 @@ UX UX UX UX UX UX UX UX
 </ul>
 
 </section>
-<section id="slide-orgheadline61">
-<h3 id="orgheadline61">Questions?</h3>
+<section id="slide-orgheadline62">
+<h3 id="orgheadline62">Questions?</h3>
 
 </section>
 </section>
 <section>
-<section id="slide-orgheadline63">
-<h2 id="orgheadline63">Slides</h2>
+<section id="slide-orgheadline64">
+<h2 id="orgheadline64">Slides</h2>
 <p>
 <code>https://www.lvh.io/CapabilityBasedSecurity</code>
 </p>
