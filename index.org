@@ -296,7 +296,7 @@
 *** Icecap
 
    #+BEGIN_HTML
-   <img style="width:100%" src="./media/IcecapDependencies.svg">
+   <img style="width:40%" src="./media/IcecapDependencies.svg">
    #+END_HTML
 
 * Why don't we do that already?
