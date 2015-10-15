@@ -203,7 +203,15 @@
 
    "Don't give X more access than X needs"
 
-** But our tools are imprecise!
+** Applied to real life
+
+   If I owe you 100 z
+
+
+
+** Principle of least privilege
+
+   But our tools are imprecise!
 
    1. Authentication first class object
    2. Authorization flows from it
@@ -296,7 +304,7 @@
 *** Icecap
 
    #+BEGIN_HTML
-   <img style="width:40%" src="./media/IcecapDependencies.svg">
+   <img style="width:50%" src="./media/IcecapDependencies.svg">
    #+END_HTML
 
 * Why don't we do that already?
@@ -315,12 +323,12 @@
     * That should probably tell you something
     * Mostly opt-in or de-facto opt-in
 
-** We sort-of are doing this already
+** We use caps already, sort-of
 
    * Webhooks (no confinement)
    * ~capsicum~ (kernel, no crypto)
 
-*** Except of course, we aren't
+*** Just not consistently
 
     How many of you:
 
@@ -353,7 +361,7 @@
 
     * Backwards compatibility is pretty great
       * Nobody wants to re-write their project
-    * Security often not the priority
+    * Security often not a priority
       * (see Building Secure Systems, PyCon 2015)
 
 ** How can we do better?
