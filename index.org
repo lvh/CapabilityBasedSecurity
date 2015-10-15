@@ -207,8 +207,9 @@
 
     If you owe someone 100 zł, do you:
 
-    * give them a stówka/make a bank transfer
-    * Give them your bank credentials
+    #+ATTR_REVEAL: :frag (roll-in)
+    * give them a stówka/make a bank transfer?
+    * give them your bank credentials?
 
 ** Principle of least privilege
 
