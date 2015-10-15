@@ -23,11 +23,6 @@
    #+ATTR_HTML: :style width:80%
    [[./media/RMSLogoWithTextmarkLight.png]]
 
-** Stuff I care about
-
-   * Cryptography & infosec
-   * Distributed systems
-
 ** Talks in most of the world
 
    #+BEGIN_HTML
@@ -48,7 +43,7 @@
 
 ** This talk
 
-   * Flipping stuff upside down
+   * Turning stuff inside out
    * All of the hobby horses
      * Information security!
      * Cryptography!
@@ -74,11 +69,6 @@
    1. Authentication /f: creds ↦ ident/
    2. Authorization /f: ident ↦ access/
 
-   #+BEGIN_NOTES
-   Unfortunately authentication is overloaded
-   Here I just mean establishing identity, not cryptographic sense which often includes integrity
-   #+END_NOTES
-
 ** What's wrong with that?
 
    Two issues we'll discuss:
@@ -86,47 +76,19 @@
    * Fails open
    * Imprecise
 
-** Fails open
+** Failure mode
 
-   What happens when /authorization/ breaks?
-
-   #+ATTR_REVEAL: :frag (roll-in)
-   * Legitimate user can't access
-   * /Illegitimate user can access/
-
-*** Authentication is tricky, too
-
-    (but we'll focus on authorization)
+   * Legitimate user can't access (fail close)
+   * /Illegitimate user can access (fail open)/
 
 *** Failing open ⇒ fragile
 
     #+ATTR_REVEAL: :frag (roll-in)
     * Code execution ≡ game over
-    * Lots of ways to get code execution
+    * Common:
       * ~pickle~
       * Weird machines
       * ...
-
-*** Python code can do anything
-
-   If I can run code, I can:
-
-   * crash your interpreter
-   * read your objects
-   * read files and env vars
-   * (anything your code can do)
-
-*** Fun snippets
-
-    #+BEGIN_SRC python
-      ().__class__.__bases__[0].__subclasses__()
-    #+END_SRC
-
-    #+BEGIN_SRC python
-      (lambda: None).func_globals # py2
-      (lambda: None).__globals__ # py3
-
-    #+END_SRC
 
 *** Not very exciting
 
@@ -152,10 +114,6 @@
    #+BEGIN_HTML
    <img style="width:80%" src="./media/WaffleIoAuthorizatonDetails.png">
    #+END_HTML
-
-*** Repositories ≈ everything
-
-    All I wanted was an issue tracker!
 
 *** Not GitHub/Waffle.io's fault
 
@@ -250,14 +208,11 @@
     * /Only/ in data center α
     * /Only/ delete servers made this way
 
-
 ** Principle of least privilege
 
    "Don't give X more access than X needs"
 
 ** But our tools are imprecise!
-
-** So far, our tools work like this:
 
    1. Authentication first class object
    2. Authorization flows from it
@@ -301,18 +256,16 @@
 
     Control what code can do
 
-** Can't we just improve access control?
+** Can we fix access control?
 
-    * Probably not
-    * Access control is already a mess
-      * Scales poorly with fine granularity
-    * Dependently typed problem
+    * Probably not; already a mess
+    * Scales poorly with fine granularity
 
 *** Dependent typed problem
 
     #+ATTR_REVEAL: :frag (roll-in)
-    * Most AC systems can express stuff like:
-      * Create & delete servers
+    * Most systems express roles, classes
+      * Create servers, delete servers
       * (That's broader than usual!)
     * That's still way too broad, I want:
       * Can create server with image /A/, &c
@@ -421,10 +374,11 @@
 
    (Yes, this includes me)
 
-   * Most programmers no longer do crypto
+   * Most programmers know not to do crypto
    * But cryptographers still do UX... poorly
 
-*** Cooperation,
+*** Cooperation & diversity FTW
+
 
 * Wrap-up
 
